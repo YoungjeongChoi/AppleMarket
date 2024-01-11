@@ -11,7 +11,14 @@ class DetailActivity : AppCompatActivity() {
 
         val receivedData = intent.getParcelableExtra<Items>("data")
 
-        binding.ivDetailPicture.background
+        if (receivedData != null) {
+            binding.ivDetailPicture.setImageResource(receivedData.image)
+            binding.tvDetailDescriptionTitle.text = receivedData.title
+            binding.tvDetailDescriptionContext.text = receivedData.context
+            binding.tvDetailProfileName.text = receivedData.seller
+            binding.tvDetailPrice.text = receivedData.price.toString()
+            binding.tvDetailProfileLoca.text = receivedData.loca
+        }
 
 
         setContentView(binding.root)
