@@ -17,7 +17,7 @@ class DetailActivity : AppCompatActivity() {
             binding.tvDetailDescriptionTitle.text = receivedData.title
             binding.tvDetailDescriptionContext.text = receivedData.context
             binding.tvDetailProfileName.text = receivedData.seller
-            binding.tvDetailPrice.text = DecimalFormat("#,###").format(receivedData.price).toString() + "원"
+            binding.tvDetailPrice.text = "${DecimalFormat("#,###").format(receivedData.price)}원"
             binding.tvDetailProfileLoca.text = receivedData.loca
         }
 

@@ -11,14 +11,11 @@ import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.NotificationCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.applemarket.databinding.ActivityMainBinding
-import org.apache.poi.hssf.usermodel.HSSFRow
-import org.apache.poi.ss.usermodel.WorkbookFactory
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
@@ -30,19 +27,49 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-//        val data = Items()
+//        val data = readExcelAssets()
         val dataList = mutableListOf<Items>()
 
-        dataList.add(Items(R.drawable.sample1, "산진 한달된 선풍기 팝니다", "이사가서 필요가 없어졌어요 급하게 내놓습니다", "대현동", 1000, "서울 서대문구 창천동", 13, 25))
-        dataList.add(Items(R.drawable.sample2, "김치냉장고", "이사로인해 내놔요", "안마담", 20000, "인천 계양구 귤현동", 8, 28))
-        dataList.add(Items(R.drawable.sample3, "샤넬 카드지갑", "고퀄지갑이구요\n사용감이 있어서 싸게 내어둡니다", "코코유", 10000, "수성구 범어동", 23,5))
-//        dataList.add(Items(R.drawable.sample4))
-//        dataList.add(Items(R.drawable.sample5))
-//        dataList.add(Items(R.drawable.sample6))
-//        dataList.add(Items(R.drawable.sample7))
-//        dataList.add(Items(R.drawable.sample8))
-//        dataList.add(Items(R.drawable.sample9))
-//        dataList.add(Items(R.drawable.sample10))
+        dataList.add(Items(R.drawable.sample1,
+            getString(R.string.title_1),
+            getString(R.string.context_1), getString(R.string.seller_1), 1000,
+            getString(R.string.locate_1), 13, 25))
+        dataList.add(Items(R.drawable.sample2,
+            getString(R.string.title_2),
+            getString(R.string.context_2), getString(R.string.seller_2), 20000,
+            getString(R.string.locate_2), 8, 28))
+        dataList.add(Items(R.drawable.sample3,
+            getString(R.string.title_3),
+            getString(R.string.context_3), getString(R.string.seller_3), 10000,
+            getString(R.string.locate_3), 23,5))
+        dataList.add(Items(R.drawable.sample4,
+            getString(R.string.title_4),
+            getString(R.string.context_4), getString(R.string.seller_4), 10000,
+            getString(R.string.location_4), 14, 17))
+        dataList.add(Items(R.drawable.sample5,
+            getString(R.string.title_5),
+            getString(R.string.context_5), getString(R.string.seller_5), 150000,
+            getString(R.string.location_5), 22, 9))
+        dataList.add(Items(R.drawable.sample6,
+            getString(R.string.title_6),
+            getString(R.string.context_6),
+            getString(R.string.seller_6), 50000, getString(R.string.location_6), 25, 16))
+        dataList.add(Items(R.drawable.sample7,
+            getString(R.string.title_7),
+            getString(R.string.context_7), getString(R.string.seller_7), 150000,
+            getString(R.string.location_7), 142, 54))
+        dataList.add(Items(R.drawable.sample8,
+            getString(R.string.title_8),
+            getString(R.string.context_8), getString(R.string.seller_8), 180000,
+            getString(R.string.location_8), 31, 7))
+        dataList.add(Items(R.drawable.sample9,
+            getString(R.string.title_9),
+            getString(R.string.context_9), getString(R.string.seller_9), 30000,
+            getString(R.string.location_9), 7, 28))
+        dataList.add(Items(R.drawable.sample10,
+            getString(R.string.title_10),
+            getString(R.string.context_10), getString(R.string.seller_10), 190000,
+            getString(R.string.location_10), 40, 6))
 
 
         val adapter = ItemAdapter(dataList)
@@ -84,69 +111,103 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-//    private fun readExcelAssets() : MutableList<Items> {
+//    fun readExcelAssets() : MutableList<Items> {
 //
 //        val dataList = mutableListOf<Items>()
 //
 //        try {
+//            val dataInput: InputStream
+//
 //            val assetManager = assets
 //
-//            val dataInput = assetManager.open("dummy.xls")
+//            dataInput = assetManager.open("dummy_data.xls")
 //
-//            val workbook = WorkbookFactory.create(dataInput)
+//            val fileSystem = POIFSFileSystem(dataInput)
+//
+//            val workbook = HSSFWorkbookFactory.create(fileSystem)
+////            val workbook = HSSFWorkbook(fileSystem)
 //
 //            val sheet = workbook.getSheetAt(0)
 //
-//            val rowIterator = sheet.iterator()
-//
-//            var rowNum = 1
+//            val rowIterator = sheet.rowIterator()
+//            var rowNum = 0
 //
 //            while (rowIterator.hasNext()) {
-//                var myRow = rowIterator.next() as HSSFRow
 //
-//                var colNum = 1
+//                val myRow = rowIterator.next() as XSSFRow
 //
-//                while (myRow.getCell(colNum).toString().isNotBlank()) {
+//                if (rowNum != 0) {
+//                    val cellIterator = myRow.cellIterator()
+//                    var colNum = 1
+//
+//                    var image = ""
+//                    var title = ""
+//                    var context = ""
+//                    var seller = ""
+//                    var price = ""
+//                    var loca = ""
+//                    var like = ""
+//                    var chat = ""
+//
+//                    while (cellIterator.hasNext()) {
+//                        val myCell = cellIterator.next() as XSSFCell
+//                        when (colNum) {
+//                            1 -> {
+//                                image = "R.drawable.${myCell.toString()}"
+//                            }
+//                            2 -> {
+//                                title = myCell.toString()
+//                            }
+//                            3 -> {
+//                                context = myCell.toString()
+//                            }
+//                            4 -> {
+//                                seller = myCell.toString()
+//                            }
+//                            5 -> {
+//                                price = myCell.toString()
+//                            }
+//                            6 -> {
+//                                loca = myCell.toString()
+//                            }
+//                            7 -> {
+//                                like = myCell.toString()
+//                            }
+//                            8 -> {
+//                                chat = myCell.toString()
+//                            }
+//                        }
+//                        colNum++
+//                        dataList.add(Items(image.toInt(), title, context, seller, price.toInt(), loca, like.toInt(), chat.toInt() ))
+//
+//                    }
+//                }
+//                rowNum++
+
+
+//                for (i in 0..10) {
 //                    var oneDataList = mutableListOf<String>()
-//                    var currentCell = myRow.getCell(colNum).toString()
+//                    var currentCell = myRow.getCell(colNum) as HSSFRow
+//                    Log.d("excel", "cell = $currentCell")
 //                    when (colNum) {
 //                        1 -> {
-//                            oneDataList.add("R.drawable.$currentCell")
+//                            oneDataList.add("R.drawable.${currentCell.toString()}")
 //                        }
-//                        2 -> {
-//                            oneDataList.add(currentCell)
+//                        else -> {
+//                            oneDataList.add(currentCell.toString())
 //                        }
-//                        3 -> {
-//                            oneDataList.add(currentCell)
-//                        }
-//                        4 -> {
-//                            oneDataList.add(currentCell)
-//                        }
-//                        5 -> {
-//                            oneDataList.add(currentCell)
-//                        }
-//                        6 -> {
-//                            oneDataList.add(currentCell)
-//                        }
-//                        7 -> {
-//                            oneDataList.add(currentCell)
-//                        }
-//                        8 -> {
-//                            oneDataList.add(currentCell)
-//                        }
-//                        else -> continue
+//
 //                    }
-//                    dataList.add(Items(oneDataList[1].toInt(), oneDataList[2],oneDataList[3], oneDataList[4], oneDataList[5].toInt(), oneDataList[6], oneDataList[7].toInt(), oneDataList[8].toInt() ))
+//                    dataList.add(Items(oneDataList[0].toInt(), oneDataList[1],oneDataList[2], oneDataList[3], oneDataList[4].toInt(), oneDataList[5], oneDataList[6].toInt(), oneDataList[7].toInt() ))
 //                    colNum++
 //                }
-//
-//                rowNum++
+
 //            }
 //
 //        } catch (e: Exception) {
 //            e.printStackTrace()
 //        }
-//        Log.d("excel", dataList.toString())
+//        Log.d("excel", "datalist = ${dataList.toString()}")
 //        return dataList
 //    }
 
