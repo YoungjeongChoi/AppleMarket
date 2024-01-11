@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">AppleMarket</string>
+    <string name="location">내배캠동</string>
+    <string name="name">닉네임</string>
+    <string name="address">주소</string>
+    <string name="temp">36.5℃</string>
+    <string name="manner_temp">매너온도</string>
+    <string name="title">제목</string>
+    <string name="context">내용</string>
+    <string name="price">가격</string>
+    <string name="chat">채팅하기</string>
+    <string name="exit_message">정말 종료하시겠습니까?</string>
+    <string name="cancel">취소</string>
+    <string name="ok">확인</string>
+</resources>
