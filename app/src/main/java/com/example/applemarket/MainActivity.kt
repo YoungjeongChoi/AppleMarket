@@ -12,8 +12,11 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
+import android.view.animation.TranslateAnimation
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.NotificationCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.applemarket.databinding.ActivityMainBinding
 
@@ -85,6 +88,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 startActivity(intent)
             }
+
+
         }
 
 
@@ -107,6 +112,24 @@ class MainActivity : AppCompatActivity() {
         binding.ibMainNoti.setOnClickListener {
             notification()
         }
+        
+        binding.rvMainList.setOnScrollChangeListener { view, scrollX, scrollY, oldScrollX, oldScrollY ->
+            val fadeIn = AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in)
+            val fadeOut = AnimationUtils.loadAnimation(applicationContext, R.anim.fade_out)
+            if (scrollY > oldScrollY) {
+                binding.fabMainTop.startAnimation(fadeIn)
+                binding.fabMainTop.isVisible = true
+            }
+            if (binding.rvMainList.canScrollVertically(-1).not()) {
+                binding.fabMainTop.startAnimation(fadeOut)
+                binding.fabMainTop.isVisible = false
+            }
+        }
+
+        binding.fabMainTop.setOnClickListener {
+            binding.rvMainList.smoothScrollToPosition(0)
+        }
+
 
 
     }

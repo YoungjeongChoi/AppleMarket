@@ -12,6 +12,7 @@ class ItemAdapter(val items: MutableList<Items>) : RecyclerView.Adapter<ItemAdap
 
     interface ItemClick {
         fun onClick(view: View, position: Int)
+
     }
 
     var itemClick : ItemClick? = null
