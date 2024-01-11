@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         adapter.itemClick = object : ItemAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
                 val intent = Intent(this@MainActivity, DetailActivity::class.java).apply {
+                    putExtra("data", dataList[position])
                 }
                 startActivity(intent)
             }

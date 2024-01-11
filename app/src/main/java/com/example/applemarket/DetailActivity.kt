@@ -9,6 +9,8 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val receivedData = intent.getParcelableExtra<Items>("data")
+
         binding.ivDetailPicture.background
 
 
