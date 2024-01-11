@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.applemarket.databinding.MainRecycleItemBinding
+import java.text.DecimalFormat
 
 class ItemAdapter(val items: MutableList<Items>) : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
 
@@ -38,7 +39,7 @@ class ItemAdapter(val items: MutableList<Items>) : RecyclerView.Adapter<ItemAdap
         holder.itemImg.setImageResource(items[position].image)
         holder.itemTitle.text = items[position].title
         holder.itemLocation.text = items[position].loca
-        holder.itemPrice.text = items[position].price.toString()
+        holder.itemPrice.text = "${DecimalFormat("#,###").format(items[position].price)}원"
         holder.itemChat.text = items[position].chat.toString()
         holder.itemLike.text = items[position].like.toString()
         Log.d("recycle", "onBind $position")

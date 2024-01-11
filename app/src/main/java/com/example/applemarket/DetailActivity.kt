@@ -3,6 +3,7 @@ package com.example.applemarket
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.applemarket.databinding.ActivityDetailBinding
+import java.text.DecimalFormat
 
 class DetailActivity : AppCompatActivity() {
     private val binding by lazy { ActivityDetailBinding.inflate(layoutInflater) }
@@ -16,7 +17,7 @@ class DetailActivity : AppCompatActivity() {
             binding.tvDetailDescriptionTitle.text = receivedData.title
             binding.tvDetailDescriptionContext.text = receivedData.context
             binding.tvDetailProfileName.text = receivedData.seller
-            binding.tvDetailPrice.text = receivedData.price.toString()
+            binding.tvDetailPrice.text = DecimalFormat("#,###").format(receivedData.price).toString() + "원"
             binding.tvDetailProfileLoca.text = receivedData.loca
         }
 
