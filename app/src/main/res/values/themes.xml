@@ -5,5 +5,11 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.AppleMarket" parent="Base.Theme.AppleMarket" />
+    <style name="Theme.AppleMarket" parent="Base.Theme.AppleMarket" >
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+<!-- ?지금도 액션바?는 없었던 것 같은데 액션바를 없앤다는 게 뭘 없애는 거지       -->
+
+    </style>
 </resources>

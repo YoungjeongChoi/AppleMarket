@@ -9,6 +9,7 @@
     <string name="context">내용</string>
     <string name="price">가격</string>
     <string name="chat">채팅하기</string>
+    <string name="delete_message">정말 삭제하시겠습니까?</string>
     <string name="exit_message">정말 종료하시겠습니까?</string>
     <string name="cancel">취소</string>
     <string name="ok">확인</string>

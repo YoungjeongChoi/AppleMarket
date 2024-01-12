@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.view.animation.TranslateAnimation
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.NotificationCompat
 import androidx.core.view.isVisible
@@ -33,46 +32,86 @@ class MainActivity : AppCompatActivity() {
 //        val data = readExcelAssets()
         val dataList = mutableListOf<Items>()
 
-        dataList.add(Items(R.drawable.sample1,
-            getString(R.string.title_1),
-            getString(R.string.context_1), getString(R.string.seller_1), 1000,
-            getString(R.string.locate_1), 13, 25))
-        dataList.add(Items(R.drawable.sample2,
-            getString(R.string.title_2),
-            getString(R.string.context_2), getString(R.string.seller_2), 20000,
-            getString(R.string.locate_2), 8, 28))
-        dataList.add(Items(R.drawable.sample3,
-            getString(R.string.title_3),
-            getString(R.string.context_3), getString(R.string.seller_3), 10000,
-            getString(R.string.locate_3), 23,5))
-        dataList.add(Items(R.drawable.sample4,
-            getString(R.string.title_4),
-            getString(R.string.context_4), getString(R.string.seller_4), 10000,
-            getString(R.string.location_4), 14, 17))
-        dataList.add(Items(R.drawable.sample5,
-            getString(R.string.title_5),
-            getString(R.string.context_5), getString(R.string.seller_5), 150000,
-            getString(R.string.location_5), 22, 9))
-        dataList.add(Items(R.drawable.sample6,
-            getString(R.string.title_6),
-            getString(R.string.context_6),
-            getString(R.string.seller_6), 50000, getString(R.string.location_6), 25, 16))
-        dataList.add(Items(R.drawable.sample7,
-            getString(R.string.title_7),
-            getString(R.string.context_7), getString(R.string.seller_7), 150000,
-            getString(R.string.location_7), 142, 54))
-        dataList.add(Items(R.drawable.sample8,
-            getString(R.string.title_8),
-            getString(R.string.context_8), getString(R.string.seller_8), 180000,
-            getString(R.string.location_8), 31, 7))
-        dataList.add(Items(R.drawable.sample9,
-            getString(R.string.title_9),
-            getString(R.string.context_9), getString(R.string.seller_9), 30000,
-            getString(R.string.location_9), 7, 28))
-        dataList.add(Items(R.drawable.sample10,
-            getString(R.string.title_10),
-            getString(R.string.context_10), getString(R.string.seller_10), 190000,
-            getString(R.string.location_10), 40, 6))
+        dataList.add(
+            Items(
+                R.drawable.sample1,
+                getString(R.string.title_1),
+                getString(R.string.context_1), getString(R.string.seller_1), 1000,
+                getString(R.string.locate_1), 13, 25
+            )
+        )
+        dataList.add(
+            Items(
+                R.drawable.sample2,
+                getString(R.string.title_2),
+                getString(R.string.context_2), getString(R.string.seller_2), 20000,
+                getString(R.string.locate_2), 8, 28
+            )
+        )
+        dataList.add(
+            Items(
+                R.drawable.sample3,
+                getString(R.string.title_3),
+                getString(R.string.context_3), getString(R.string.seller_3), 10000,
+                getString(R.string.locate_3), 23, 5
+            )
+        )
+        dataList.add(
+            Items(
+                R.drawable.sample4,
+                getString(R.string.title_4),
+                getString(R.string.context_4), getString(R.string.seller_4), 10000,
+                getString(R.string.location_4), 14, 17
+            )
+        )
+        dataList.add(
+            Items(
+                R.drawable.sample5,
+                getString(R.string.title_5),
+                getString(R.string.context_5), getString(R.string.seller_5), 150000,
+                getString(R.string.location_5), 22, 9
+            )
+        )
+        dataList.add(
+            Items(
+                R.drawable.sample6,
+                getString(R.string.title_6),
+                getString(R.string.context_6),
+                getString(R.string.seller_6), 50000, getString(R.string.location_6), 25, 16
+            )
+        )
+        dataList.add(
+            Items(
+                R.drawable.sample7,
+                getString(R.string.title_7),
+                getString(R.string.context_7), getString(R.string.seller_7), 150000,
+                getString(R.string.location_7), 142, 54
+            )
+        )
+        dataList.add(
+            Items(
+                R.drawable.sample8,
+                getString(R.string.title_8),
+                getString(R.string.context_8), getString(R.string.seller_8), 180000,
+                getString(R.string.location_8), 31, 7
+            )
+        )
+        dataList.add(
+            Items(
+                R.drawable.sample9,
+                getString(R.string.title_9),
+                getString(R.string.context_9), getString(R.string.seller_9), 30000,
+                getString(R.string.location_9), 7, 28
+            )
+        )
+        dataList.add(
+            Items(
+                R.drawable.sample10,
+                getString(R.string.title_10),
+                getString(R.string.context_10), getString(R.string.seller_10), 190000,
+                getString(R.string.location_10), 40, 6
+            )
+        )
 
 
         val adapter = ItemAdapter(dataList)
@@ -89,13 +128,18 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
+        }
+        adapter.itemLongClick = object : ItemAdapter.ItemLongClick {
+            override fun onLongClick(view: View, position: Int) {
+                showDeleteDialog()
+            }
 
         }
 
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                showDialog()
+                showExitDialog()
             }
         }
 
@@ -112,7 +156,7 @@ class MainActivity : AppCompatActivity() {
         binding.ibMainNoti.setOnClickListener {
             notification()
         }
-        
+
         binding.rvMainList.setOnScrollChangeListener { view, scrollX, scrollY, oldScrollX, oldScrollY ->
             val fadeIn = AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in)
             val fadeOut = AnimationUtils.loadAnimation(applicationContext, R.anim.fade_out)
@@ -131,112 +175,21 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    }
+
+
+    fun showExitDialog() {
+
+        val exitDialog = DialogExitFragment()
+        exitDialog.show(supportFragmentManager, "Dialog Fragment")
 
     }
 
-//    fun readExcelAssets() : MutableList<Items> {
-//
-//        val dataList = mutableListOf<Items>()
-//
-//        try {
-//            val dataInput: InputStream
-//
-//            val assetManager = assets
-//
-//            dataInput = assetManager.open("dummy_data.xls")
-//
-//            val fileSystem = POIFSFileSystem(dataInput)
-//
-//            val workbook = HSSFWorkbookFactory.create(fileSystem)
-////            val workbook = HSSFWorkbook(fileSystem)
-//
-//            val sheet = workbook.getSheetAt(0)
-//
-//            val rowIterator = sheet.rowIterator()
-//            var rowNum = 0
-//
-//            while (rowIterator.hasNext()) {
-//
-//                val myRow = rowIterator.next() as XSSFRow
-//
-//                if (rowNum != 0) {
-//                    val cellIterator = myRow.cellIterator()
-//                    var colNum = 1
-//
-//                    var image = ""
-//                    var title = ""
-//                    var context = ""
-//                    var seller = ""
-//                    var price = ""
-//                    var loca = ""
-//                    var like = ""
-//                    var chat = ""
-//
-//                    while (cellIterator.hasNext()) {
-//                        val myCell = cellIterator.next() as XSSFCell
-//                        when (colNum) {
-//                            1 -> {
-//                                image = "R.drawable.${myCell.toString()}"
-//                            }
-//                            2 -> {
-//                                title = myCell.toString()
-//                            }
-//                            3 -> {
-//                                context = myCell.toString()
-//                            }
-//                            4 -> {
-//                                seller = myCell.toString()
-//                            }
-//                            5 -> {
-//                                price = myCell.toString()
-//                            }
-//                            6 -> {
-//                                loca = myCell.toString()
-//                            }
-//                            7 -> {
-//                                like = myCell.toString()
-//                            }
-//                            8 -> {
-//                                chat = myCell.toString()
-//                            }
-//                        }
-//                        colNum++
-//                        dataList.add(Items(image.toInt(), title, context, seller, price.toInt(), loca, like.toInt(), chat.toInt() ))
-//
-//                    }
-//                }
-//                rowNum++
+    fun showDeleteDialog() {
 
+        val deleteDialog = DialogDeleteFragment()
+        deleteDialog.show(supportFragmentManager, "Delete Dialog")
 
-//                for (i in 0..10) {
-//                    var oneDataList = mutableListOf<String>()
-//                    var currentCell = myRow.getCell(colNum) as HSSFRow
-//                    Log.d("excel", "cell = $currentCell")
-//                    when (colNum) {
-//                        1 -> {
-//                            oneDataList.add("R.drawable.${currentCell.toString()}")
-//                        }
-//                        else -> {
-//                            oneDataList.add(currentCell.toString())
-//                        }
-//
-//                    }
-//                    dataList.add(Items(oneDataList[0].toInt(), oneDataList[1],oneDataList[2], oneDataList[3], oneDataList[4].toInt(), oneDataList[5], oneDataList[6].toInt(), oneDataList[7].toInt() ))
-//                    colNum++
-//                }
-
-//            }
-//
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//        }
-//        Log.d("excel", "datalist = ${dataList.toString()}")
-//        return dataList
-//    }
-
-    fun showDialog() {
-        val exitDialog = DialogExitFragment()
-        exitDialog.show(supportFragmentManager, "Dialog Fragment")
     }
 
 //    override fun onDialogPositiveClick(dialog: DialogFragment) {
@@ -282,7 +235,8 @@ class MainActivity : AppCompatActivity() {
             builder = NotificationCompat.Builder(this)
         }
 
-        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.baseline_notifications_none_24)
+        val bitmap =
+            BitmapFactory.decodeResource(resources, R.drawable.baseline_notifications_none_24)
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         val pendingIntent = PendingIntent.getActivity(
@@ -314,8 +268,6 @@ class MainActivity : AppCompatActivity() {
 
 
 }
-
-
 
 
 //private fun showNotification() {

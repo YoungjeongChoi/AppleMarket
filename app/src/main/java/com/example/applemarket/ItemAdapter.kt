@@ -12,10 +12,14 @@ class ItemAdapter(val items: MutableList<Items>) : RecyclerView.Adapter<ItemAdap
 
     interface ItemClick {
         fun onClick(view: View, position: Int)
+    }
 
+    interface ItemLongClick {
+        fun onLongClick(view: View, position: Int)
     }
 
     var itemClick : ItemClick? = null
+    var itemLongClick : ItemLongClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = MainRecycleItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -30,12 +34,16 @@ class ItemAdapter(val items: MutableList<Items>) : RecyclerView.Adapter<ItemAdap
 
     override fun getItemId(position: Int): Long {
         return position.toLong()
-//        return super.getItemId(position)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.setOnClickListener {
             itemClick?.onClick(it, position)
+        }
+        holder.itemView.setOnLongClickListener {
+            itemLongClick?.onLongClick(it, position)
+            deleteData(it, position)
+            return@setOnLongClickListener true
         }
         holder.itemImg.setImageResource(items[position].image)
         holder.itemTitle.text = items[position].title
@@ -55,6 +63,9 @@ class ItemAdapter(val items: MutableList<Items>) : RecyclerView.Adapter<ItemAdap
         val itemLike = binding.tvRecycleLike
     }
 
+    fun deleteData(view: View, position: Int) {
+        notifyItemRemoved(position)
+    }
 //    inner class ViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.main_recycle_item, parent, false)) {
 //        val itemImg =
 //    }
