@@ -1,8 +1,10 @@
 package com.example.applemarket
 
 import android.content.Context
+import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.annotation.RequiresApi
 import org.apache.poi.hssf.usermodel.HSSFRow
 import org.apache.poi.ss.usermodel.WorkbookFactory
 
@@ -13,10 +15,12 @@ data class Items(
     val seller: String?,
     val price: Int,
     val loca: String?,
-    val like: Int,
-    val chat: Int
+    var like: Int,
+    val chat: Int,
+    var isLike: Boolean
 ) : Parcelable {
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     constructor(parcel: Parcel) : this(
         image = parcel.readInt(),
         title = parcel.readString(),
@@ -25,11 +29,13 @@ data class Items(
         price = parcel.readInt(),
         loca = parcel.readString(),
         like = parcel.readInt(),
-        chat = parcel.readInt()
+        chat = parcel.readInt(),
+        isLike = parcel.readBoolean()
     )
 
     override fun describeContents(): Int = 0
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(image)
         parcel.writeString(title)
@@ -39,6 +45,7 @@ data class Items(
         parcel.writeString(loca)
         parcel.writeInt(like)
         parcel.writeInt(chat)
+        parcel.writeBoolean(isLike)
     }
 
 

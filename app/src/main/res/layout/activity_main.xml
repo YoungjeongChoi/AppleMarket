@@ -109,8 +109,8 @@
         android:backgroundTint="@color/orange"
         app:rippleColor="@color/orange_gray"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
-        android:src="@drawable/baseline_arrow_circle_up_24"
-        app:maxImageSize="45dp"
+        android:src="@drawable/baseline_arrow_upward_24"
+        app:maxImageSize="30dp"
         app:fabCustomSize="40dp"
         android:visibility="invisible"
 

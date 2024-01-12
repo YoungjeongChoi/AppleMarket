@@ -210,7 +210,7 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <ImageView
+                    <View
                         android:id="@+id/iv_detail_bar2"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
@@ -276,11 +276,9 @@
 
         <ImageButton
             android:id="@+id/ib_detail_price_like"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
             android:background="@color/transparent"
             android:src="@drawable/baseline_favorite_border_24"
 
@@ -289,12 +287,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             />
 
-        <ImageView
+        <View
             android:id="@+id/iv_detail_price_line"
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="5dp"
             android:layout_marginBottom="10dp"
             android:background="@color/gray"
 

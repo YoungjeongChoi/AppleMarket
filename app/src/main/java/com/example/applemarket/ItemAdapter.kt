@@ -23,7 +23,6 @@ class ItemAdapter(val items: MutableList<Items>) : RecyclerView.Adapter<ItemAdap
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = MainRecycleItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        Log.d("recycle", "onCreateHolder")
         //왜 한번에 여유분(?) 9개 다 안 만들어두고 딱 보이는 것만 일단 만들어두는 걸까 어차피 스크롤 내릴 때 만들텐데
         return ViewHolder(binding)
     }
@@ -51,7 +50,11 @@ class ItemAdapter(val items: MutableList<Items>) : RecyclerView.Adapter<ItemAdap
         holder.itemPrice.text = "${DecimalFormat("#,###").format(items[position].price)}원"
         holder.itemChat.text = items[position].chat.toString()
         holder.itemLike.text = items[position].like.toString()
-        Log.d("recycle", "onBind $position")
+        if (items[position].isLike) {
+            holder.itemLiked.setImageResource(R.drawable.baseline_favorite_24)
+        } else {
+            holder.itemLiked.setImageResource(R.drawable.baseline_favorite_border_24)
+        }
     }
 
     inner class ViewHolder(val binding: MainRecycleItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -61,6 +64,7 @@ class ItemAdapter(val items: MutableList<Items>) : RecyclerView.Adapter<ItemAdap
         val itemPrice = binding.tvRecyclePrice
         val itemChat = binding.tvRecycleChat
         val itemLike = binding.tvRecycleLike
+        val itemLiked = binding.ivRecycleLike
     }
 
     fun deleteData(view: View, position: Int) {

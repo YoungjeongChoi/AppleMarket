@@ -31,7 +31,8 @@ open class DialogExitFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState : Bundle?): Dialog {
         return activity?.let{
             val builder = AlertDialog.Builder(it)
-            builder.setMessage(R.string.exit_message)
+            builder.setTitle(R.string.exit_title)
+                .setMessage(R.string.exit_message)
                 .setPositiveButton(R.string.ok, { dialog, id -> exitProcess(0) })
                 .setNegativeButton(R.string.cancel, DialogInterface.OnClickListener { dialog, id -> dismiss() })
             builder.create()

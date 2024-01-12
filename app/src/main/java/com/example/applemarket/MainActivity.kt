@@ -3,6 +3,7 @@ package com.example.applemarket
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.media.AudioAttributes
@@ -14,6 +15,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +23,8 @@ import com.example.applemarket.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+
+    private var dataList = mutableListOf<Items>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,14 +34,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 //        val data = readExcelAssets()
-        val dataList = mutableListOf<Items>()
+
 
         dataList.add(
             Items(
                 R.drawable.sample1,
                 getString(R.string.title_1),
                 getString(R.string.context_1), getString(R.string.seller_1), 1000,
-                getString(R.string.locate_1), 13, 25
+                getString(R.string.locate_1), 13, 25, false
             )
         )
         dataList.add(
@@ -45,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                 R.drawable.sample2,
                 getString(R.string.title_2),
                 getString(R.string.context_2), getString(R.string.seller_2), 20000,
-                getString(R.string.locate_2), 8, 28
+                getString(R.string.locate_2), 8, 28, false
             )
         )
         dataList.add(
@@ -53,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                 R.drawable.sample3,
                 getString(R.string.title_3),
                 getString(R.string.context_3), getString(R.string.seller_3), 10000,
-                getString(R.string.locate_3), 23, 5
+                getString(R.string.locate_3), 23, 5, false
             )
         )
         dataList.add(
@@ -61,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                 R.drawable.sample4,
                 getString(R.string.title_4),
                 getString(R.string.context_4), getString(R.string.seller_4), 10000,
-                getString(R.string.location_4), 14, 17
+                getString(R.string.location_4), 14, 17, false
             )
         )
         dataList.add(
@@ -69,7 +73,7 @@ class MainActivity : AppCompatActivity() {
                 R.drawable.sample5,
                 getString(R.string.title_5),
                 getString(R.string.context_5), getString(R.string.seller_5), 150000,
-                getString(R.string.location_5), 22, 9
+                getString(R.string.location_5), 22, 9, false
             )
         )
         dataList.add(
@@ -77,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                 R.drawable.sample6,
                 getString(R.string.title_6),
                 getString(R.string.context_6),
-                getString(R.string.seller_6), 50000, getString(R.string.location_6), 25, 16
+                getString(R.string.seller_6), 50000, getString(R.string.location_6), 25, 16, false
             )
         )
         dataList.add(
@@ -85,7 +89,7 @@ class MainActivity : AppCompatActivity() {
                 R.drawable.sample7,
                 getString(R.string.title_7),
                 getString(R.string.context_7), getString(R.string.seller_7), 150000,
-                getString(R.string.location_7), 142, 54
+                getString(R.string.location_7), 142, 54, false
             )
         )
         dataList.add(
@@ -93,7 +97,7 @@ class MainActivity : AppCompatActivity() {
                 R.drawable.sample8,
                 getString(R.string.title_8),
                 getString(R.string.context_8), getString(R.string.seller_8), 180000,
-                getString(R.string.location_8), 31, 7
+                getString(R.string.location_8), 31, 7, false
             )
         )
         dataList.add(
@@ -101,7 +105,7 @@ class MainActivity : AppCompatActivity() {
                 R.drawable.sample9,
                 getString(R.string.title_9),
                 getString(R.string.context_9), getString(R.string.seller_9), 30000,
-                getString(R.string.location_9), 7, 28
+                getString(R.string.location_9), 7, 28, false
             )
         )
         dataList.add(
@@ -109,7 +113,7 @@ class MainActivity : AppCompatActivity() {
                 R.drawable.sample10,
                 getString(R.string.title_10),
                 getString(R.string.context_10), getString(R.string.seller_10), 190000,
-                getString(R.string.location_10), 40, 6
+                getString(R.string.location_10), 40, 6, false
             )
         )
 
@@ -131,7 +135,9 @@ class MainActivity : AppCompatActivity() {
         }
         adapter.itemLongClick = object : ItemAdapter.ItemLongClick {
             override fun onLongClick(view: View, position: Int) {
-                showDeleteDialog()
+                if (showDeleteDialog(position)) {
+                    adapter.notifyItemRemoved(position)
+                }
             }
 
         }
@@ -185,12 +191,29 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun showDeleteDialog() {
+    private fun showDeleteDialog(position: Int): Boolean {
 
-        val deleteDialog = DialogDeleteFragment()
-        deleteDialog.show(supportFragmentManager, "Delete Dialog")
+        val deleteDial = AlertDialog.Builder(this@MainActivity)
+        var isDelete= false
+        deleteDial.setIcon(R.drawable.baseline_notifications_none_24)
+        deleteDial.setTitle("상품 삭제")
+        deleteDial.setMessage(R.string.delete_message)
+        deleteDial.setPositiveButton(R.string.ok) { dialog, id ->
+            dataList.removeAt(position)
+            isDelete = true
+        }
+        deleteDial.setNegativeButton(R.string.cancel) { dialog, id ->
+            dialog.dismiss()
+            isDelete = false
+        }
+        deleteDial.show()
+        return isDelete
+
+//        val deleteDialog = DialogDeleteFragment()
+//        deleteDialog.show(supportFragmentManager, "Delete Dialog")
 
     }
+
 
 //    override fun onDialogPositiveClick(dialog: DialogFragment) {
 //        finish()
